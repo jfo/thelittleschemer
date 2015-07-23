@@ -37,11 +37,15 @@
       ((null? l) '())
       (else (cons (car (car l)) (firsts (cdr l)))))))
 
+(define insertR
+  (lambda (new old lat)
+    (cond
+      ((null? lat) lat)
+      ((eq? old (car lat)) (cons new (cdr lat)))
+      (else (cons (car lat) (insertR new old (cdr lat)))))))
+
 (display
-  (firsts '((1 2 3 4 5)
-            (5 2 3 4 5)
-            (4 2 3 4 5)
-            (3 2 3 4 5)))
+  (insertR "topping" "fudge" '("ice" "cream" "with" "fudge" "for" "dessert"))
 )
 
 ; (eval
