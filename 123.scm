@@ -110,9 +110,3 @@
       ((null? lat) '())
       ((equal? old (car lat)) (cons new (multisubst new old (cdr lat))))
       (else (cons (car lat) (multisubst new old (cdr lat)))))))
-
-; (display
-;     (multisubst 'fried 'fish '(chips and fish or fish and fried))
-;
-;
-; )

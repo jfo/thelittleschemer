@@ -116,7 +116,7 @@
   (lambda (n m)
     (cond
       ((< n m) n)
-      (else (/ (- n m) m)))))
+      (else (% (- n m) m)))))
 
 (define length
   (lambda (lat)
@@ -130,25 +130,58 @@
       ((zero? n) (car lat))
       (else (pick (sub1 n) (cdr lat))))))
 
+
+(define nonums
+  (lambda (lat)
+    (cond
+      ((null? lat) '())
+      ((number? (car lat))
+             (nonums (cdr lat)))
+      (else
+        (cons (car lat)
+              (nonums (cdr lat)))))))
+
+(define allnums
+  (lambda (lat)
+    (cond
+      ((null? lat)
+       '())
+      ((number? (car lat))
+       (cons (car lat)
+             (allnums (cdr lat))))
+      (else
+        (allnums (cdr lat))))))
+
+(define eqan?
+  (lambda (a1 a2)
+    (cond
+      ((and (number? a1) (number? a2))
+       (= a1 a2))
+      ((or (number? a1) (number? a2))
+       #f)
+      (else
+       (equal? a1 a2)))))
+
+(define occur
+  (lambda (a lat)
+    (cond
+      ((null? lat) 0)
+      ((eqan? a (car lat)) (add1 (occur a (cdr lat))))
+      (else
+        (occur a (cdr lat))))))
+
+(define one?
+  (lambda (n)
+    (eqan? 1 n)))
+
 (define rempick
   (lambda (n lat)
     (cond
-      ((zero? n) (cdr lat))
+      ((one? n) (cdr lat))
       (else (cons (car lat)
                   (rempick
                     (sub1 n)
                     (cdr lat)))))))
 
-
-
-
 (puts '(
-   '(3 6 9 11 4 1  1 1 )
-   ; (pick 1 '(3 6 9 11 4 1  1 1 ) )
-   ; (pick 2 '(3 6 9 11 4 1  1 1 ) )
-   ; (pick 3 '(3 6 9 11 4 1  1 1 ) )
-   ; (pick 4 '(3 6 9 11 4 1  1 1 ) )
-   ; (/  8 3)
-   ; (/  4009 289)
 ))
-
