@@ -23,7 +23,7 @@
   (lambda (a lat)
     (cond
       ((null? lat) #f)
-      ((eq? a (car lat)) #t)
+      ((eqan? a (car lat)) #t)
       (else (member? a (cdr lat))))))
 
 (define rember
@@ -46,6 +46,12 @@
     (cond
       ((null? l) '())
       (else (cons (car (car l)) (firsts (cdr l)))))))
+
+(define seconds
+  (lambda (l)
+    (cond
+      ((null? l) '())
+      (else (cons (car (cdr (car l))) (seconds (cdr l)))))))
 
 (define insertR
   (lambda (new old lat)
